@@ -1,5 +1,5 @@
 # computational musicology
-##Corpus
+## Corpus
 The corpus that will be used in this research consists out of the two spotify "this is:" playlits. The first playlist is the "This is: Micheal Jackson" playlist, the second playlist is the "This is: Madonna" playlist. So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became ledgends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
 
 ## comparison

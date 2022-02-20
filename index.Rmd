@@ -13,11 +13,45 @@ knitr::opts_chunk$set(echo = TRUE)
 
 install.packages("usethis" )
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Corpus
+The corpus that will be used in this research consists out of the two spotify "this is:" playlits. The first playlist is the "This is: Micheal Jackson" playlist, the second playlist is the "This is: Madonna" playlist. So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became ledgends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+comparison
+The groups that will be compared in this corpus are the artists. How do songs of the king and queen of pop defer from eachother? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
+
+How representative are the tracks?
+One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where ofcourse also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist/ However, there is also a possibility that from these tracks new insights will be derived.
+
+tracks that are extremely typical/atypical
+Typical:
+micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "Papa don't preach"
+
+Atypical
+micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(very strange track; partly computer voice and story telling), "Bitch im Madonna"(sounds a bit more like techno, deviating from the other tracks)
 
 ```{r }
+
+
+```
+
+## Including Plots
+
+The following plot shows the 
+
+```{r pressure, echo=FALSE}
+#plot(combined_corpus)
+library(tidyverse)
+library(spotifyr)
+dplyr::bind_rows()
+corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
+corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
+
+combined_corpus <-
+  bind_rows(
+    corpus_king %>% mutate(category = "King of pop (Michael Jackson)"),
+    corpus_queen %>% mutate(category = "Queen of pop (Madonna)")
+  )
+
 combined_corpus %>%
   ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence)) +
   geom_point() +
@@ -28,15 +62,4 @@ combined_corpus %>%
   scale_color_manual(name = "mode", 
                      values = c("lightblue", "steelblue4"), labels = c('Minor', 'Major')) +
   theme_bw()
-
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -7,39 +7,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-install.packages("usethis" )
-
-Corpus
-The corpus that will be used in this research consists out of the two spotify "this is:" playlits. The first playlist is the "This is: Micheal Jackson" playlist, the second playlist is the "This is: Madonna" playlist. So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became ledgends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
-
-comparison
-The groups that will be compared in this corpus are the artists. How do songs of the king and queen of pop defer from eachother? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
-
-How representative are the tracks?
-One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where ofcourse also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist/ However, there is also a possibility that from these tracks new insights will be derived.
-
-tracks that are extremely typical/atypical
-Typical:
-micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "Papa don't preach"
-
-Atypical
-micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(very strange track; partly computer voice and story telling), "Bitch im Madonna"(sounds a bit more like techno, deviating from the other tracks)
-
-```{r }
-
-
-```
-
-## Including Plots
-
-The following plot shows the 
-
-```{r pressure, echo=FALSE}
-#plot(combined_corpus)
 library(tidyverse)
 library(spotifyr)
 dplyr::bind_rows()
@@ -51,6 +18,37 @@ combined_corpus <-
     corpus_king %>% mutate(category = "King of pop (Michael Jackson)"),
     corpus_queen %>% mutate(category = "Queen of pop (Madonna)")
   )
+
+```
+
+## Corpus
+The corpus that will be used in this research consists out of the two spotify "this is:" playlits. The first playlist is the "This is: Micheal Jackson" playlist, the second playlist is the "This is: Madonna" playlist. So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became ledgends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
+
+## comparison
+The groups that will be compared in this corpus are the artists. How do songs of the king and queen of pop defer from eachother? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
+
+## How representative are the tracks?
+One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where ofcourse also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist/ However, there is also a possibility that from these tracks new insights will be derived.
+
+## tracks that are extremely typical/atypical
+#### Typical:
+micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "Papa don't preach"
+
+#### Atypical
+micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(very strange track; partly computer voice and story telling), "Bitch im Madonna"(sounds a bit more like techno, deviating from the other tracks)
+
+```{r }
+
+
+```
+
+## data visualisations of track-level Spotify features
+
+The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, I wanted to add the name of those tracks in the plot but didn't figure out how to do it. So, the next werkcollege this will be fixed hopefully.
+
+
+```{r first_plot, echo=FALSE}
+#plot(combined_corpus)
 
 combined_corpus %>%
   ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence)) +

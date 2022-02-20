@@ -17,8 +17,18 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r }
+combined_corpus %>%
+  ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence)) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 1) +
+  geom_rug(size = 0.1) +
+  facet_wrap(~category) +
+  scale_color_manual(name = "mode", 
+                     values = c("lightblue", "steelblue4"), labels = c('Minor', 'Major')) +
+  theme_bw()
+
 ```
 
 ## Including Plots

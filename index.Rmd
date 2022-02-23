@@ -10,15 +10,20 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 library(tidyverse)
 library(spotifyr)
 library(forcats)
 library(plotly)
 library(flexdashboard)
+
 dplyr::bind_rows()
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
 
+best_track_king_billi <- get_track_audio_features(c("2IU9ftOgyRL2caQGWK1jjX", "5ChkMS8OtdzJeqyybCc9R5"))
+best_track_queen_vergin <- get_track_audio_features(c("1C2h7mLntPSeVYciMRTF4a", "1ZPlNanZsJSPK5h9YZZFbZ"))
+  
 combined_corpus <-
   bind_rows(
     corpus_king %>% mutate(category = "King of pop (Michael Jackson)"),
@@ -66,9 +71,6 @@ First data visualisations of track-level Spotify features
 column
 -------------------------------------------------------------------------------
 
-### Desription plot
-
-The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, I wanted to add the name of those tracks in the plot but didn't figure out how to do it. So, the next werkcollege this will be fixed hopefully.
 
 
 column
@@ -79,7 +81,7 @@ column
 
 
 my_fisrt_plot <- combined_corpus %>%
-  ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence)) +
+  ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence, label = track.name)) +
   geom_point(alpha = 0.7) +
   xlim(0, 1) +
   ylim(0, 1) +
@@ -91,5 +93,24 @@ my_fisrt_plot <- combined_corpus %>%
   theme_bw()+
   theme(title =element_text(size=6.5, face='bold'))
 
-my_fisrt_plot
+ggplotly(my_fisrt_plot)
 ```
+***
+Desription plot
+
+The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, I wanted to add the name of those tracks in the plot but didn't figure out how to do it. So, the next werkcollege this will be fixed hopefully.
+
+
+Comparison top tracks
+=============================================================================
+
+
+Test chromagrams
+=============================================================================
+wood <-
+  get_tidy_audio_analysis("6IQILcYkN2S2eSu5IHoPEH") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+

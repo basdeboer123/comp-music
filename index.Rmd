@@ -2,7 +2,10 @@
 title: "King and Queen of pop"
 author: "Bas de Boer"
 date: "2/16/2022"
-output: html_document
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    orientation: columns
 ---
 
 ```{r setup, include=FALSE}
@@ -10,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(spotifyr)
 library(forcats)
+library(plotly)
+library(flexdashboard)
 dplyr::bind_rows()
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
@@ -21,8 +26,10 @@ combined_corpus <-
   )
 
 ```
+Introduction page
+=====================================================================
 
-## Corpus
+### Corpus
 The corpus that will be used in this research consists out of the two Spotify "This Ss:" playlist. The first playlist is the "This Is Micheal Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These are playlists that are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
 
 So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
@@ -31,19 +38,20 @@ This Is Micheal Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXa
 
 This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
 
-## comparison
+### comparison
 The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? COuld this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
 
 
 
-## How representative are the tracks?
+### How representative are the tracks?
 One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where ofcourse also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist/ However, there is also a possibility that from these tracks new insights will be derived.
 
-## tracks that are extremely typical/atypical
-#### Typical:
+### tracks that are extremely typical/atypical
+
+Typical:
 micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "Papa don't preach"
 
-#### Atypical
+Atypical
 micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(very strange track; partly computer voice and story telling), "Bitch im Madonna"(sounds a bit more like techno, deviating from the other tracks)
 
 ```{r }
@@ -51,17 +59,28 @@ micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(
 
 ```
 
-## data visualisations of track-level Spotify features
+
+First data visualisations of track-level Spotify features
+=============================================================================
+
+column
+-------------------------------------------------------------------------------
+
+### Desription plot
 
 The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, I wanted to add the name of those tracks in the plot but didn't figure out how to do it. So, the next werkcollege this will be fixed hopefully.
 
 
+column
+--------------------------------------------------------------------------------------
+
 ```{r first_plot, echo=FALSE}
 #plot(combined_corpus)
 
-combined_corpus %>%
+
+my_fisrt_plot <- combined_corpus %>%
   ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence)) +
-  geom_point() +
+  geom_point(alpha = 0.7) +
   xlim(0, 1) +
   ylim(0, 1) +
   labs(title = "Distribution of songs of the King and Queen of pop over energy, dancebility and valence") +
@@ -70,5 +89,7 @@ combined_corpus %>%
   scale_color_manual(name = "mode", 
                      values = c("lightblue", "steelblue4"), labels = c('Minor', 'Major')) +
   theme_bw()+
-  theme(title =element_text(size=8, face='bold'))
+  theme(title =element_text(size=6.5, face='bold'))
+
+my_fisrt_plot
 ```

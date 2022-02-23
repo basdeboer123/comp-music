@@ -16,7 +16,7 @@ library(spotifyr)
 library(forcats)
 library(plotly)
 library(flexdashboard)
-
+#library(compmus)
 dplyr::bind_rows()
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")

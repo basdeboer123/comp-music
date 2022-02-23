@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(spotifyr)
+library(forcats)
 dplyr::bind_rows()
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
@@ -22,8 +23,11 @@ combined_corpus <-
 ```
 
 ## Corpus
-The corpus that will be used in this research consists out of the two spotify "this is:" playlits. The first playlist is the "This is: Micheal Jackson" playlist, the second playlist is the "This is: Madonna" playlist. So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became ledgends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
+The corpus that will be used in this research consists out of the two spotify "this is:" playlits. The first playlist is the "This Is Micheal Jackson" playlist, the second playlist is the "This Is Madonna" playlist. So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became ledgends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
 
+
+This Is Micheal Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXaTIN6XNquoW
+This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
 ## comparison
 The groups that will be compared in this corpus are the artists. How do songs of the king and queen of pop defer from eachother? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
 
@@ -55,9 +59,11 @@ combined_corpus %>%
   geom_point() +
   xlim(0, 1) +
   ylim(0, 1) +
+  labs(title = "Distribution of songs of the King and Queen of pop over energy, dancebility and valence") +
   geom_rug(size = 0.1) +
   facet_wrap(~category) +
   scale_color_manual(name = "mode", 
                      values = c("lightblue", "steelblue4"), labels = c('Minor', 'Major')) +
-  theme_bw()
+  theme_bw()+
+  theme(title =element_text(size=8, face='bold'))
 ```

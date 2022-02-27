@@ -66,7 +66,7 @@ micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(
 ```
 
 
-First data visualisations of track-level Spotify features
+Data visualization on track-level features
 =============================================================================
 
 column 

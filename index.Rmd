@@ -5,11 +5,12 @@ date: "2/16/2022"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
+    social: menu
     orientation: columns
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
 
 library(tidyverse)
 library(spotifyr)
@@ -17,7 +18,7 @@ library(forcats)
 library(plotly)
 library(flexdashboard)
 library(compmus)
-dplyr::bind_rows()
+
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
 
@@ -68,13 +69,8 @@ micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(
 First data visualisations of track-level Spotify features
 =============================================================================
 
-column
--------------------------------------------------------------------------------
-
-
-
-column
---------------------------------------------------------------------------------------
+column 
+----------------------------------------------------------------------
 
 ```{r first_plot, echo=FALSE}
 #plot(combined_corpus)
@@ -98,7 +94,7 @@ ggplotly(my_fisrt_plot)
 ***
 Desription plot
 
-The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can vieuw which tracks these are by hovering over them.
+The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
 
 
 Test chromagrams
@@ -162,7 +158,9 @@ billie_thriller_deluxe %>%
 ```
 
 ***
-desciption
+Description
+
+The two plots above show two chromagrams for different versions of the song Billie Jean, the first version is from the Thriller album in 1982. The second version is from the thriller deluxe album in 2008. The euclidean is used to normalize the pitch classes. As you can see, most energy is concentrated in the pitch classes F# and C#.
 
 
 column
@@ -190,15 +188,76 @@ compmus_long_distance(
   ) +
   geom_tile() +
   coord_equal() +
-  labs(x = "billie jean thriller deluxe", y = "billie jean thriller") +
-  labs(title = "distances between chroma vectors Billie Jean versions") +
+  labs(x = "Billie Jean (Thriller deluxe album)", y = "Billie Jean (Thriller album)") +
+  labs(title = "Distances between chroma vectors Billie Jean versions (Distance metric: euclidean)") +
   theme_minimal() +
+  theme(title =element_text(size=6, face='bold')) +
+  scale_fill_viridis_c(guide = NULL)
+
+```
+
+```{r test_chroma3, echo=FALSE}
+
+
+
+compmus_long_distance(
+  billie_thriller_deluxe %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  billie_thriller %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  feature = pitches,
+  method = "chebyshev"
+) %>%
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_equal() +
+  labs(x = "Billie Jean (Thriller deluxe album)", y = "Billie Jean (Thriller album)") +
+  labs(title = "Distances between chroma vectors Billie Jean versions (Distance metric: chebyshev)") +
+  theme_minimal() +
+  theme(title =element_text(size=6, face='bold')) +
+  scale_fill_viridis_c(guide = NULL)
+
+```
+
+```{r test_chroma4, echo=FALSE}
+
+
+
+compmus_long_distance(
+  billie_thriller_deluxe %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  billie_thriller %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  feature = pitches,
+  method = "manhattan"
+) %>%
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_equal() +
+  labs(x = "Billie Jean (Thriller deluxe album)", y = "Billie Jean (Thriller album)") +
+  labs(title = "Distances between chroma vectors Billie Jean versions (Distance metric: manhattan)") +
+  theme_minimal() +
+  theme(title =element_text(size=6, face='bold')) +
   scale_fill_viridis_c(guide = NULL)
 
 ```
 
 *** 
-desciption
+Description
+
+The three plots above show dynamic time warping used to compare the two different version of Billie Jean; three different measures for the distance metric are used (Euclidean, Manhattan and Chebyshev), which metric is used is stated in the title of the plot. For all three different metrics, a clear diagonal line is visible in the graph which shows the similarity between thge two versions. I did not know which of the three graphs shows the similarities/differences between the two versions of Billie Jean best, so if you have suggestions I am happy to hear about it.
 
 Conclusion & discussion 
 =============================================================================

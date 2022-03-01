@@ -5,8 +5,7 @@ date: "2/16/2022"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
-    social: menu
-    orientation: columns
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -32,10 +31,10 @@ combined_corpus <-
   )
 
 ```
-Introduction page
-=====================================================================
 
-### Corpus
+### Introduction page
+
+#### Corpus
 The corpus that will be used in this research consists out of the two Spotify "This Ss:" playlist. The first playlist is the "This Is Micheal Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These are playlists that are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
 
 So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
@@ -44,15 +43,15 @@ This Is Micheal Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXa
 
 This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
 
-### comparison
+#### comparison
 The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? COuld this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
 
 
 
-### How representative are the tracks?
+#### How representative are the tracks?
 One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where ofcourse also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist/ However, there is also a possibility that from these tracks new insights will be derived.
 
-### tracks that are extremely typical/atypical
+#### tracks that are extremely typical/atypical
 
 Typical:
 micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "Papa don't preach"
@@ -66,11 +65,8 @@ micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(
 ```
 
 
-Data visualization on track-level features
-=============================================================================
+### Data visualization on track-level features
 
-column 
-----------------------------------------------------------------------
 
 ```{r first_plot, echo=FALSE}
 #plot(combined_corpus)
@@ -97,8 +93,7 @@ Desription plot
 The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
 
 
-Test chromagrams
-=============================================================================
+### Billie Jean chromagram 
 
 ```{r echo=FALSE}
 
@@ -115,9 +110,6 @@ billie_thriller <-
   unnest(segments) %>%
   select(start, duration, pitches)
 ```
-
-column
------------------------------------------------------------------------------
 
 ```{r test_chroma, echo=FALSE}
 
@@ -138,34 +130,13 @@ billie_thriller %>%
   scale_fill_viridis_c()
 ```
 
-```{r echo=FALSE}
+*** 
+Description chromagrams
 
-billie_thriller_deluxe %>%
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
-  compmus_gather_chroma() %>% 
-  ggplot(
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = pitch_class,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude", title = "chromagram Billie Jean Thriller deluxe album") +
-  theme_minimal() +
-  scale_fill_viridis_c()
-```
-
-***
-Description
-
-The two plots above show two chromagrams for different versions of the song Billie Jean, the first version is from the Thriller album in 1982. The second version is from the thriller deluxe album in 2008. The euclidean is used to normalize the pitch classes. As you can see, most energy is concentrated in the pitch classes F# and C#.
+The plot above shows the chromagram for the track Billie Jean by Micheal Jackson. This version of Billie Jean is from the Thriller album in 1982. In the next section this version will be compared to the Billie Jean track from the thriller deluxe album in 2008. The euclidean is used to normalize the pitch classes. As you can see, most energy is concentrated in the pitch classes F# and C#.
 
 
-column
---------------------------------------------------------------------------
-
+### Dynamic Time Warping of two versions of the Billie Jean track 
 
 ```{r test_chroma2, echo=FALSE}
 
@@ -254,12 +225,9 @@ compmus_long_distance(
 
 ```
 
-*** 
-Description
+***
+Description dynamic time warping two version
 
 The three plots above show dynamic time warping used to compare the two different version of Billie Jean; three different measures for the distance metric are used (Euclidean, Manhattan and Chebyshev), which metric is used is stated in the title of the plot. For all three different metrics, a clear diagonal line is visible in the graph which shows the similarity between thge two versions. I did not know which of the three graphs shows the similarities/differences between the two versions of Billie Jean best, so if you have suggestions I am happy to hear about it.
 
-Conclusion & discussion 
-=============================================================================
-
-## To Do
+### Conclusion & discussion 

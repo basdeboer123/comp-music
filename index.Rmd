@@ -21,7 +21,7 @@ library(compmus)
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
 
-best_track_king_billi <- get_track_audio_features(c("2IU9ftOgyRL2caQGWK1jjX", "5ChkMS8OtdzJeqyybCc9R5"))
+best_track_king_billie <- get_track_audio_features(c("2IU9ftOgyRL2caQGWK1jjX", "5ChkMS8OtdzJeqyybCc9R5"))
 best_track_queen_vergin <- get_track_audio_features(c("1C2h7mLntPSeVYciMRTF4a", "1ZPlNanZsJSPK5h9YZZFbZ"))
   
 combined_corpus <-
@@ -30,6 +30,35 @@ combined_corpus <-
     corpus_queen %>% mutate(category = "Queen of pop (Madonna)")
   )
 
+```
+
+``` {r get_means_mj, include=FALSE}
+mean_king <- corpus_king %>%
+  summarise(
+    mean_danceability = mean(danceability),
+    mean_energy = mean(energy),
+    mean_speechiness = mean(speechiness),
+    mean_acousticness = mean(acousticness),
+    mean_instrumentalness = mean(instrumentalness),
+    mean_liveness = mean(liveness),
+    mean_valence = mean(valence)
+    
+  )
+```
+
+``` {r get_means_madon, include=FALSE}
+
+mean_queen <- corpus_queen %>%
+  summarise(
+    mean_danceability = mean(danceability),
+    mean_energy = mean(energy),
+    mean_speechiness = mean(speechiness),
+    mean_acousticness = mean(acousticness),
+    mean_instrumentalness = mean(instrumentalness),
+    mean_liveness = mean(liveness),
+    mean_valence = mean(valence)
+    
+  )
 ```
 
 ### Introduction page
@@ -59,14 +88,9 @@ micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "P
 Atypical
 micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(very strange track; partly computer voice and story telling), "Bitch im Madonna"(sounds a bit more like techno, deviating from the other tracks)
 
-```{r }
-
-
-```
 
 
 ### Data visualization on track-level features
-
 
 ```{r first_plot, echo=FALSE}
 #plot(combined_corpus)
@@ -80,15 +104,16 @@ my_fisrt_plot <- combined_corpus %>%
   labs(title = "Distribution of songs of the King and Queen of pop over energy, dancebility and valence") +
   geom_rug(size = 0.1) +
   facet_wrap(~category) +
-  scale_color_manual(name = "mode", 
-                     values = c("lightblue", "steelblue4"), labels = c('Minor', 'Major')) +
+  scale_color_manual(name = "mode", values = c("lightblue", "steelblue4"), labels = c('Minor', 'Major')) +
   theme_bw()+
   theme(title =element_text(size=6.5, face='bold'))
+  
 
+#my_fisrt_plot
 ggplotly(my_fisrt_plot)
 ```
 ***
-Desription plot
+Description plot
 
 The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
 

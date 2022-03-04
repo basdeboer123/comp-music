@@ -5,6 +5,7 @@ date: "2/16/2022"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
+    self_contained: false
     
 ---
 
@@ -17,6 +18,7 @@ library(forcats)
 library(plotly)
 library(flexdashboard)
 library(compmus)
+library(reshape)
 
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
@@ -63,31 +65,30 @@ mean_queen <- corpus_queen %>%
 
 ### Introduction page
 
-#### Corpus
-The corpus that will be used in this research consists out of the two Spotify "This Ss:" playlist. The first playlist is the "This Is Micheal Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These are playlists that are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
+The corpus that will be used in this research consists out of the two Spotify "This is:" playlists. The first playlist is the "This Is Micheal Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These playlists are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
 
-So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them.
+So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them. The playlist that will be used are on the right side of this page.
 
 This Is Micheal Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXaTIN6XNquoW
 
 This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
 
-#### comparison
-The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? COuld this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
+
+The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? Could this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
 
 
 
-#### How representative are the tracks?
-One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where ofcourse also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist/ However, there is also a possibility that from these tracks new insights will be derived.
-
-#### tracks that are extremely typical/atypical
+One of the possible problems may be in the fact that in the "This is: Micheal jackson" playlist there are also songs of the Jackson five. These songs where of course also iconic for Micheal Jackson, however, they may be a bit less representative for the overall Micheal Jackson playlist. However, there is also a possibility that from these tracks new insights will be derived.
 
 Typical:
-micheal jackson: "Billie jean", "Smooth criminal" madonna: "Die another day", "Papa don't preach"
+Micheal Jackson: "Billie jean", "Smooth criminal" Madonna: "Die another day", "Papa don't preach"
 
 Atypical
-micheal jackson: "she's Out of my life"(very slow track) madonna: "Dark ballet"(very strange track; partly computer voice and story telling), "Bitch im Madonna"(sounds a bit more like techno, deviating from the other tracks)
+Micheal Jackson: "she's Out of my life"(very slow track) Madonna: "Don't cry for me Argentina'
+***
+Test embedding playlist...
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXaTIN6XNquoW?utm_source=generator" width="40%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 
 ### Data visualization on track-level features
@@ -108,7 +109,7 @@ my_fisrt_plot <- combined_corpus %>%
   scale_color_manual(name = "mode", values = c("lightblue", "steelblue4")) +
   #scale_fill_discrete(name = "New Legend Title") +
   theme_bw()+
-  theme(title =element_text(size=6.5, face='bold'))
+  theme(title =element_text(size=8, face='bold'))
   
 
 #my_fisrt_plot
@@ -120,7 +121,32 @@ p
 ***
 Description plot
 
-The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, th artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
+The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Micheal Jackson' playlist and the 'This is: Madonna' playlist next to each other. The x- and y-axis show the energy and dancibility respectively. The size of the dots implicit the valence (musical positiveness) of a track. As you can see are the values clustered around the same place for both artist, however, the tracks of Micheal Jackson are more spread for dancebility as well as for energy. Furthermore, the artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
+
+### Comparizon between Queen and King based on all features (test)
+
+```{r box_plot2, echo=FALSE}
+
+#str(corpus_king)
+
+cat <- combined_corpus %>%
+  select(category)
+
+corpus_combined_select <- combined_corpus %>%
+  select(danceability, energy, speechiness, acousticness, instrumentalness, liveness, valence) %>%
+  mutate(category = cat)
+
+test <- corpus_combined_select[8] %>% pull(category)%>% pull(category)
+
+tester <- ggplot(stack(corpus_combined_select), aes(x = values, y = ind, fill(~test))) +
+  geom_boxplot() +
+  facet_wrap(~corpus_combined_select[8] %>% pull(category)%>% pull(category))
+
+tester
+#str(corpus_combined_select[8] %>% pull(category)%>% pull(category) )
+```
+
+
 
 
 ### Billie Jean chromagram 

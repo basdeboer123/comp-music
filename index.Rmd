@@ -176,11 +176,15 @@ Atypical
 Micheal Jackson: "she's Out of my life"(very slow track) Madonna: "Don't cry for me Argentina'
 
 ***
-Test embedding playlist...
+
 
 ```{=html}
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXaTIN6XNquoW?utm_source=generator" width="70%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXaTIN6XNquoW?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
+```
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWTQllLRMgY9S?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
 
@@ -302,9 +306,14 @@ billie_thriller %>%
 ```
 
 *** 
-Description chromagrams
+Description chromagram
 
 The plot above shows the chromagram for the track Billie Jean by Micheal Jackson. This version of Billie Jean is from the Thriller album in 1982. In the next section this version will be compared to the Billie Jean track from the thriller deluxe album in 2008. The euclidean is used to normalize the pitch classes. As you can see, most energy is concentrated in the pitch classes F# and C#.
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
 
 
 ### Dynamic Time Warping of two versions of the Billie Jean track 
@@ -397,6 +406,12 @@ The cleptogram on the left shows a number of changes in the timbre components;
 - At t=110 this shifts back to c03 (second verse)
 - AT t=150 there is a shift back to c02 (second chorus), where for the rest of the song the biggest magnitude is in c02, except for a little piece around t=220 where it shifts back to c03 (musical solo).
 
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
+
+
 
 ### Self-Similarity Matrix of Billie Jean
 
@@ -439,6 +454,11 @@ By looking at the self-similarity matrix while listening to the song the differe
 
 - t = 230-290 -> chorus again. 
 
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
+
 
 ### chordo- or keygram.
 
@@ -471,6 +491,15 @@ Billie_jean %>%
   theme_minimal() +
   labs(x = "Time (s)", y = "")
 ```
+
+***
+Description: To Do
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
+
 
 ### Track-Level Summaries key-chord-corpus
 
@@ -542,6 +571,9 @@ combined %>%
 
 ```
 
+***
+Description: To Do
+
 
 ### Average timbre coefficients for the Micheal Jackson and Madonna playlists
 
@@ -565,5 +597,9 @@ combined %>%
   labs(title = "Average timbre coefficients for the Micheal Jackson and Madonna playlists", x = "Spotify Timbre Coefficients", y = "", fill = "Artist")
 
 ```
+
+***
+
+Description: To Do
 
 ### Conclusion & discussion 

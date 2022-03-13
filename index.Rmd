@@ -5,6 +5,7 @@ date: "2/16/2022"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
+    theme: yeti
     self_contained: false
     
 ---

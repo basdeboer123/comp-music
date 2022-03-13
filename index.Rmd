@@ -350,8 +350,7 @@ compmus_long_distance(
 ***
 Description dynamic time warping two version
 
-The three plots above show dynamic time warping used to compare the two different version of Billie Jean; three different measures for the distance metric are used (Euclidean, Manhattan and Chebyshev), which metric is used is stated in the title of the plot. For all three different metrics, a clear diagonal line is visible in the graph which shows the similarity between thge two versions. I did not know which of the three graphs shows the similarities/differences between the two versions of Billie Jean best, so if you have suggestions I am happy to hear about it.
-
+The plot besides shows dynamic time warping used to compare the two different version of Billie Jean; the Euclidean distance is used as distance metric. There is a clear diagonal line visible in the graph which shows the similarity between the two versions. This diagonal line is not very good vissible in the first 30 seconds which means that the two different version do defer a bit at that place.
 
 ### Cepstrogram of Billie Jean showing changes in timbre components 
 ```{r Cepstrogram, echo=FALSE}
@@ -402,7 +401,7 @@ Description
 
 The cleptogram on the left shows a number of changes in the timbre components;
 
-- At t=90 there is a shift to c02 (first chorus)
+- At t=70 there is a shift to c02 (first chorus)
 - At t=110 this shifts back to c03 (second verse)
 - AT t=150 there is a shift back to c02 (second chorus), where for the rest of the song the biggest magnitude is in c02, except for a little piece around t=220 where it shifts back to c03 (musical solo).
 
@@ -442,9 +441,9 @@ By looking at the self-similarity matrix while listening to the song the differe
 
 - t=0-30 -> musical intro (only instruments).
 
-- t=30-90 -> start of singing, first verse.
+- t=30-70 -> start of singing, first verse.
 
-- t=90-110 -> first chorus, where the voice becomes louder.
+- t=70-110 -> first chorus, where the voice becomes louder.
 
 - t=110-150 -> end of first chorus, start of second verse.
 
@@ -460,9 +459,9 @@ By looking at the self-similarity matrix while listening to the song the differe
 
 
 
-### chordo- or keygram.
+### Chordogram of Billie Jean.
 
-```{r key-chord-billie, echo = FALSE}
+```{r chord-billie, echo = FALSE}
 
 Billie_jean <-
   get_tidy_audio_analysis("7J1uxwnxfQLu4APicE5Rnj") %>%
@@ -479,9 +478,9 @@ Billie_jean <-
 
 Billie_jean %>% 
   compmus_match_pitch_template(
-    key_templates,         # Change to chord_templates if descired
+    chord_templates,         # Change to chord_templates if descired
     method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
+    norm = "chebyshev"     # Try different norms
   ) %>%
   ggplot(
     aes(x = start + duration / 2, width = duration, y = name, fill = d)
@@ -493,13 +492,18 @@ Billie_jean %>%
 ```
 
 ***
-Description: To Do
+
+Description
+
+The chordogram on the left shows the chords that are played throughout the Billie Jean track. The Euclidean is used as method and the chebyshev as normalization, using these two metrics provides a nice visualization on the chords used; this results in a number of observations:
+
+- F#:minor and Gb:major are the most used chords, visible by the dark blue line at these chords throughout the entire track.
+
+- At t=70 and t=150 a vertical light blue/yellow line is visible throughout the chords,this indicates a change in the chords played at that moment. This is at the moment where the choruses start (at the line: "People always told me, "Be careful of what you do"").
 
 ```{=html}
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
-
-
 
 ### Track-Level Summaries key-chord-corpus
 
@@ -530,10 +534,16 @@ madonna <-
   ) %>%
   slice(1:30) %>%
   add_audio_analysis()
-combined <-
+
+combined_violin <-
   micheal %>%
   mutate(Artist = "Micheal Jackson") %>%
   bind_rows(madonna %>% mutate(Artist = "Madonna") %>% bind_rows(Mozart %>% mutate(Artist = "Mozart")))
+
+combined <-
+  micheal %>%
+  mutate(Artist = "Micheal Jackson") %>%
+  bind_rows(madonna %>% mutate(Artist = "Madonna"))
 ```
 
 
@@ -568,18 +578,33 @@ combined %>%
     size = "Duration (min)",
     alpha = "Volume (dBFS)"
   )
-
 ```
 
 ***
-Description: To Do
+
+Description
+
+The plot on the left shows the mean temp0 (in beats per minute) as well as the variation in tempo throughout the tracks. Furthermore, the length of the tracks is indicated by the size of the dots and the volume of the tracks by the transparency. From this plot we can derive a number of observation which are stated below:
+
+- Almost all tracks, for both artists have an high volume (dBFS), this was very common in pop songs; they tried to master the tracks so that the volume is at its loudest so the music stands out. The phenomenon where the volume in tracks is increased can also be referred to as the Loudness war.
+
+- Most tracks have a low varieties in tempo throughout the track, there is one outlier here: "Smooth criminal" by Micheal Jackson has got a high variety in the bpm throughout the track. You can check it yourself in the audio player below.
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2bCQHF9gdG5BNDVuEIEnNk?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
+
+- The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter.
+
+- The Madonna tracks are a little more clustered around the mean which means Madonna's tracks have less variety in tempo and especially less tempo changes in them.
 
 
 ### Average timbre coefficients for the Micheal Jackson and Madonna playlists
 
 
 ```{r violin, echo = FALSE}
-combined %>%
+combined_violin %>%
   mutate(
     timbre =
       map(
@@ -600,6 +625,14 @@ combined %>%
 
 ***
 
-Description: To Do
+Description
+
+The violin plot on the side shows the different timber coefficients for the first thirty tracks in the Micheal Jackson (Blue) and Madonna (Purple) playlist, furthermore, the "This is Mozart" playlist (Yellow) is used as a third category in order to compare the two to a different musical category. A number of observation can be derived from this plot, however because the Spotify timber coefficients are rather vague no real conclusion can be drawn from this.
+
+- The first column (c01) shows the overall loudness of the tracks, this is for Madonna as well as Micheal Jackson about the same hight, the loudness in the Mozart playlist is a bit lower.
+
+- The biggest difference between Micheal Jackson and Madonna is in c04; the Micheal jackson tracks have a much bigger spread here.
+
+- The Mozart tracks especially defer from the pop tracks in the timber coefficients: c02, c03 and c07.
 
 ### Conclusion & discussion 

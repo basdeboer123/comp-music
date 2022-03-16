@@ -46,21 +46,19 @@ abc %>%
   labs(x = "Time (s)", y = "Novelty")
 
 
-abc_2 <- get_tidy_audio_analysis("2VCUcIPY3i6pv9Nu9Vg6k3")
 
 
-abc_2 %>%
-  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) %>%
-  ggplot(aes(x = time, y = bpm, fill = power)) +
-  geom_raster() +
-  scale_fill_viridis_c(guide = "none") +
-  labs(x = "Time (s)", y = "Tempo (BPM)") +
-  theme_classic()
+cor(combined_corpus[,6:16]) %>% melt() -> melt_playlist
+melt_playlist
 
-gc()
+melt_playlist$value[melt_playlist$value < 0.1 & melt_playlist$value > -0.1] = NA #subset the small correlations and make them NA
 
-cor(combined_corpus[,6:16]) %>% melt() -> mept_combined
-melt_combined$value 
-
-melt_playlist %>%
-  ggplot(aes(x = Var1, y = Var2, fill = value))
+#Visualize correlations
+melt_playlist %>% 
+  ggplot(aes(x=X1, y=X2, fill=value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", mid = "white", high = "green") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  xlab("Var 1") +
+  ylab("Var 2") +
+  labs(title = "Correlations between Spotify audio features in complete corpus")

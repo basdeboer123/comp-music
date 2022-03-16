@@ -596,9 +596,27 @@ The plot on the left shows the mean temp0 (in beats per minute) as well as the v
 ```
 
 
-- The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter.
+- The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter. In the following tab the tempogram of this track is show.
 
 - The Madonna tracks are a little more clustered around the mean which means Madonna's tracks have less variety in tempo and especially less tempo changes in them.
+
+
+### Novelty functions
+```{r novelty, echo = FALSE}
+abc <- get_tidy_audio_analysis("2VCUcIPY3i6pv9Nu9Vg6k3")
+
+abc %>%
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) %>%
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)", title =  "cyclic tempogram of ABC") +
+  theme_classic()
+```
+
+*** 
+
+Cyclic tempogram of the track ABC by the jackson five. In the previous graph this tracks was lebeled as an tempo of 188, however, this tempogram clearly shows that this is not the case. The tempo throughout the track is about 94 bpm which means that the graph in the previous tab indeed showed the double-time beats for this track.
 
 
 ### Average timbre coefficients for the Micheal Jackson and Madonna playlists
@@ -635,9 +653,6 @@ The violin plot on the side shows the different timber coefficients for the firs
 - The biggest difference between Micheal Jackson and Madonna is in c04; the Micheal jackson tracks have a much bigger spread here.
 
 - The Mozart tracks especially defer from the pop tracks in the timber coefficients: c02, c03 and c07.
-
-
-### Novelty functions
 
 
 ### Conclusion & discussion 

@@ -636,4 +636,8 @@ The violin plot on the side shows the different timber coefficients for the firs
 
 - The Mozart tracks especially defer from the pop tracks in the timber coefficients: c02, c03 and c07.
 
+
+### Novelty functions
+
+
 ### Conclusion & discussion 

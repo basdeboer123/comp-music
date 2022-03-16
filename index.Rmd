@@ -153,11 +153,9 @@ key_templates <-
 
 ```
 
-### Introduction page
+### Introduction of corpus
 
-Student: Bas de Boer
-StudentID: 12221317
-Computational musicology
+
 
 
 The corpus that will be used in this research consists out of the two Spotify "This is:" playlists. The first playlist is the "This Is Micheal Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These playlists are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
@@ -173,8 +171,8 @@ One of the possible problems may be in the fact that in the "This is: Micheal ja
 Typical:
 Micheal Jackson: "Billie jean", "Smooth criminal" Madonna: "Die another day", "Papa don't preach"
 
-Atypical
-Micheal Jackson: "she's Out of my life"(very slow track) Madonna: "Don't cry for me Argentina'
+Atypical:
+Micheal Jackson: "she's Out of my life" (very slow track) Madonna: "Don't cry for me Argentina"
 
 
 
@@ -423,7 +421,7 @@ The cleptogram on the left shows a number of changes in the timbre components;
 
 
 
-### Self-Similarity Matrix of Billie Jean
+### Self-Similarity Matrix of Billie Jean showing transitions in the strack
 
 ```{r real-self-sim-matrix, echo = FALSE}
 bzt %>%

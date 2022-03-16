@@ -155,14 +155,14 @@ key_templates <-
 
 ### Introduction page
 
+Student: Bas de Boer
+StudentID: 12221317
+Computational musicology
+
+
 The corpus that will be used in this research consists out of the two Spotify "This is:" playlists. The first playlist is the "This Is Micheal Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These playlists are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
 
 So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them. The playlist that will be used are on the right side of this page.
-
-This Is Micheal Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXaTIN6XNquoW
-
-This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
-
 
 The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? Could this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
 
@@ -175,6 +175,16 @@ Micheal Jackson: "Billie jean", "Smooth criminal" Madonna: "Die another day", "P
 
 Atypical
 Micheal Jackson: "she's Out of my life"(very slow track) Madonna: "Don't cry for me Argentina'
+
+
+
+
+
+This Is Micheal Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXaTIN6XNquoW
+
+This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
+
+![micheal_jackson](/home/bas/compmusic/compmusic/index_files/figure-html/micheal_jackson.jpeg){width=49%} ![madonna](/home/bas/compmusic/compmusic/index_files/figure-html/madonna.jpeg){width=49%}
 
 ***
 
@@ -656,3 +666,19 @@ The violin plot on the side shows the different timber coefficients for the firs
 
 
 ### Conclusion & discussion 
+
+What stands out in the the analysed Spotify features for both Micheal Jackson as well as Madonna is that the tracks of both artists have a high average dancebility and energy. Furthermore, the average tempo for both artists is around 120 beats per minute, this is around the average for pop songs (100-140 bpm). This high energy and dancebility are of course important in the success of both artists, especially in pop genre dancing and energy is very important. However, what I can conclude form this analyses is that the features of the tracks itself where not the most important factor in the success of both artists. It was the the pioneering innovation of subjects and song-texts, because pop more than just music. It’s about the image, the publicity, the collaborations, the hit singles, the cultural and sociopolitical messages behind the songs, and the theatrical extravaganzas the artists produce on stage. 
+
+For Michael Jackson it was his groundbreaking creativity. For instance, his theatrical extravaganzas with his incredible dance moves and on top of that he brought messages to the world with his songs that no artist has addressed before. He challenged the country’s ideas of how an African-American man should behave and be seen, topics like differences in race, sexuality and racism and where adressed in his songs. This incredible creativity along with the high energy and dancebility in his songs made him not only the perfect pop-star but the pop-legend.
+
+Madonna reinvented the way women were perceived in pop culture, forever pushing the sexual boundaries on stage and on screen. Besides here great music, there was also an message behind most of her songs, for instance; "Like a prayer" where she kinda offends the christian church by singing a song of a girl in love with god. She provokes people and makes them think, an aspect also very familiar to the Michael Jackson songs. But, besides her music career Madonna also was a artist, dancer, musician, vocalist, director, producer, actress, entrepreneur, philanthropist and children’s book writer. Making her a great exemplary role for women in that time. 
+
+Concluding, both artist have very similar means for most Spotify features, where especially energy and dancebility stands out. Micheal Jackson's tracks are a bit more varied looking at the spread in the graphs. But, what made both these artist become legends is not only the sounds and features of their music, it was the groundbreaking message in the tracks and their creativity and personality, not only on stage but also behind the scenes. Causing theses names to be remembered for a very long time.
+
+
+***
+
+![micheal_jackson_2](/home/bas/compmusic/compmusic/index_files/figure-html/Michael_Jackson_2.jpg){width=100%}
+![madonna](/home/bas/compmusic/compmusic/index_files/figure-html/Madonna_2.jpg){width=100%}
+
+

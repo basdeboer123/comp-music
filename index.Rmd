@@ -12,7 +12,6 @@ output:
 
 ```{r setup, include=FALSE}
 
-
 library(tidyverse)
 library(spotifyr)
 library(forcats)
@@ -45,7 +44,6 @@ mean_king <- corpus_king %>%
     mean_instrumentalness = mean(instrumentalness),
     mean_liveness = mean(liveness),
     mean_valence = mean(valence)
-    
   )
 ```
 
@@ -60,7 +58,6 @@ mean_queen <- corpus_queen %>%
     mean_instrumentalness = mean(instrumentalness),
     mean_liveness = mean(liveness),
     mean_valence = mean(valence)
-    
   )
 ```
 
@@ -155,13 +152,11 @@ key_templates <-
 
 ### Introduction of corpus
 
-
 The corpus that will be used in this research consists out of the two Spotify "This is:" playlists. The first playlist is the "This Is Michael Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These playlists are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
 
 So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them. The playlist that will be used are on the right side of this page.
 
 The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? Could this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
-
 
 
 One of the possible problems may be in the fact that in the "This is: Michael jackson" playlist there are also songs of the Jackson five. These songs where of course also iconic for Michael Jackson, however, they may be a bit less representative for the overall Michael Jackson playlist. However, there is also a possibility that from these tracks new insights will be derived.
@@ -172,10 +167,6 @@ Michael Jackson: "Billie jean", "Smooth criminal" Madonna: "Die another day", "P
 Atypical:
 Michael Jackson: "she's Out of my life" (very slow track) Madonna: "Don't cry for me Argentina"
 
-
-
-
-
 This Is Michael Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXaTIN6XNquoW
 
 This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
@@ -183,7 +174,6 @@ This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY
 ![michael_jackson](/home/bas/compmusic/compmusic/index_files/figure-html/micheal_jackson.jpeg){width=49%} ![madonna](/home/bas/compmusic/compmusic/index_files/figure-html/madonna.jpeg){width=49%}
 
 ***
-
 
 ```{=html}
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXaTIN6XNquoW?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
@@ -197,11 +187,9 @@ This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY
 
 ### Data visualization on track-level features
 
-```{r first_plot, echo=FALSE}
-#plot(combined_corpus)
+```{r plot_track-level_features, echo=FALSE}
 
-
-my_fisrt_plot <- combined_corpus %>%
+track_level <- combined_corpus %>%
   mutate(mode = ifelse(mode == 0, "Minor", "Major")) %>%
   ggplot(aes(x = energy, y = danceability, color = factor(mode), size = valence, label = track.name)) +
   geom_point(alpha = 0.7) +
@@ -215,11 +203,9 @@ my_fisrt_plot <- combined_corpus %>%
   theme_bw()+
   theme(title =element_text(size=15))
   
-
-#my_fisrt_plot
-p <- ggplotly(my_fisrt_plot)
-p
-
+# make interactive
+track_level_plotly <- ggplotly(track_level)
+track_level_plotly
 
 ```
 ***
@@ -234,8 +220,6 @@ The following plot shows the dancebility, energy, valence and mode on track-leve
 
 ```{r box_plot, echo=FALSE, warning=FALSE}
 
-#str(corpus_king)
-
 cat <- combined_corpus %>%
   select(category)
 
@@ -245,15 +229,14 @@ corpus_combined_select <- combined_corpus %>%
 
 test <- corpus_combined_select[7] %>% pull(category)%>% pull(category)
 
-tester <- ggplot(stack(corpus_combined_select), aes(x = values, y = ind, fill(~test))) +
+box_plot_king_queen <- ggplot(stack(corpus_combined_select), aes(x = values, y = ind, fill(~test))) +
   geom_boxplot() +
   facet_wrap(~corpus_combined_select[7] %>% pull(category)%>% pull(category)) +
-  labs(title = "Comparison of Mean featrues between Michael Jackson and Madonna") +
+  labs(title = "Comparison of Mean features between Michael Jackson and Madonna") +
   theme_bw()+
   theme(title =element_text(size=8))
 
-tester
-#str(corpus_combined_select[8] %>% pull(category)%>% pull(category) )
+box_plot_king_queen
 
 ```
 
@@ -275,17 +258,78 @@ The previous plot showed the overall distribution on track-level features. In th
 - Dancebility is also high for both artists, the dancebility of the Michael Jackson is a little higher, where the tracks of Madonna are more clustered around the mean.
 
 
+### correlation matrix to show dependencies in both playlists
+
+```{r correlation_king,  include=FALSE}
+cor(corpus_king[,6:16]) %>% melt() -> melt_king
+melt_king
+
+melt_king$value[melt_king$value < 0.1 & melt_king$value > -0.1] = NA #subset the small correlations and make them NA
+
+#Visualize correlations
+cor_matrix_king <- melt_king %>% 
+  ggplot(aes(x=X1, y=X2, fill=value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", mid = "white", high = "green") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  xlab("Var 1") +
+  ylab("Var 2") +
+  labs(title = "Correlations between Spotify audio features in Michael Jackson playlist") +
+  theme(axis.text=element_text(size=8), title = element_text(size=8))
+```
+
+```{r correlation_queen,  include=FALSE}
+cor(corpus_queen[,6:16]) %>% melt() -> melt_queen
+melt_queen
+
+melt_queen$value[melt_queen$value < 0.1 & melt_queen$value > -0.1] = NA #subset the small correlations and make them NA
+
+#Visualize correlations
+cor_matrix_queen <- melt_queen %>% 
+  ggplot(aes(x=X1, y=X2, fill=value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", mid = "white", high = "green") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  xlab("Var 1") +
+  ylab("Var 2") +
+  labs(title = "Correlations between Spotify audio features in Madonna playlist") +
+  theme(axis.text=element_text(size=8), title = element_text(size=8))
+```
+
+```{r, figures-side, fig.show="hold", out.width="50%"}
+
+cor_matrix_queen
+cor_matrix_king
+```
+
+***
+
+The two matrices on in this tab show the overall correlation between tracks for the playlist of Madonna and Michael Jackson. By looking at these matrices we can deduce the following: 
+
+- Valance had got a positive correlation with energy and dancebility, for both artists.
+
+- Loudness had got a positive correlation with energy, for both artists.
+
+- Accousticness has got a negative correlation with dancebility as well as energy, loudness, speechiness and valence. This is true for both artist, but the effect more extreme in the Michael Jackson playlist.
+
+- The Michael Jackson matrix has got more dark-red colors, indicating that there are more strongly negative correlations.
+
+- The green diagonal line in the middle indicates the correlations with the category itself, which of course is always 1.
+
+
+
 ### Billie Jean chromagram 
 
 ```{r echo=FALSE}
 
-## billie_thriller_deluxe
+# billie_thriller_deluxe
 billie_thriller_deluxe <-
   get_tidy_audio_analysis("5ChkMS8OtdzJeqyybCc9R5") %>%
   select(segments) %>%
   unnest(segments) %>%
   select(start, duration, pitches)
-## billie_thriller
+
+# billie_thriller
 billie_thriller <-
   get_tidy_audio_analysis("7J1uxwnxfQLu4APicE5Rnj") %>%
   select(segments) %>%
@@ -293,7 +337,7 @@ billie_thriller <-
   select(start, duration, pitches)
 ```
 
-```{r test_chroma, echo=FALSE}
+```{r Billie_jean_chromagram, echo=FALSE}
 
 billie_thriller %>%
   mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
@@ -322,12 +366,9 @@ The plot above shows the chromagram for the track Billie Jean by Michael Jackson
 ```
 
 
-
 ### Dynamic Time Warping of two versions of the Billie Jean track 
 
-```{r test_chroma2, echo=FALSE}
-
-
+```{r dynamic_time_warping, echo=FALSE}
 
 compmus_long_distance(
   billie_thriller_deluxe %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
@@ -363,7 +404,7 @@ The plot besides shows dynamic time warping used to compare the two different ve
 ```{r Cepstrogram, echo=FALSE}
 
 #section, bar, beat, and tatum
-bzt <-
+Cepstrogram_billie_jean <-
   get_tidy_audio_analysis("7J1uxwnxfQLu4APicE5Rnj") %>% # Change URI.
   compmus_align(bars, segments) %>%                     # Change `bars`
   select(bars) %>%                                      #   in all three
@@ -385,8 +426,8 @@ bzt <-
 
 ```
 
-```{r self_sim1, echo = FALSE}
-bzt %>%
+```{r Cepstrogram_billie_jean, echo = FALSE}
+Cepstrogram_billie_jean %>%
   compmus_gather_timbre() %>%
   ggplot(
     aes(
@@ -404,8 +445,6 @@ bzt %>%
 ```
 
 ***
-Description
-
 The cleptogram on the left shows a number of changes in the timbre components;
 
 - At t=70 there is a shift to c02 (first chorus)
@@ -417,12 +456,10 @@ The cleptogram on the left shows a number of changes in the timbre components;
 ```
 
 
-
-
 ### Self-Similarity Matrix of Billie Jean showing transitions in the strack
 
 ```{r real-self-sim-matrix, echo = FALSE}
-bzt %>%
+Cepstrogram_billie_jean %>%
   compmus_self_similarity(timbre, "angular") %>% 
   ggplot(
     aes(
@@ -512,6 +549,7 @@ The chordogram on the left shows the chords that are played throughout the Billi
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
+
 ### Track-Level Summaries key-chord-corpus
 
 ```{r key-chord-corpus, echo = FALSE}
@@ -531,8 +569,6 @@ Mozart <-
   ) %>%
   slice(1:30) %>%
   add_audio_analysis()
-
-
 
 madonna <-
   get_playlist_audio_features(
@@ -591,7 +627,7 @@ combined %>%
 
 Description
 
-The plot on the left shows the mean temp0 (in beats per minute) as well as the variation in tempo throughout the tracks. Furthermore, the length of the tracks is indicated by the size of the dots and the volume of the tracks by the transparency. From this plot we can derive a number of observation which are stated below:
+The plot on the left shows the mean tempo (in beats per minute) as well as the variation in tempo throughout the tracks. Furthermore, the length of the tracks is indicated by the size of the dots and the volume of the tracks by the transparency. From this plot we can derive a number of observation which are stated below:
 
 - Almost all tracks, for both artists have an high volume (dBFS), this was very common in pop songs; they tried to master the tracks so that the volume is at its loudest so the music stands out. The phenomenon where the volume in tracks is increased can also be referred to as the Loudness war.
 
@@ -601,11 +637,28 @@ The plot on the left shows the mean temp0 (in beats per minute) as well as the v
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2bCQHF9gdG5BNDVuEIEnNk?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
-
 - The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter. In the following tab the tempogram of this track is show.
 
 - The Madonna tracks are a little more clustered around the mean which means Madonna's tracks have less variety in tempo and especially less tempo changes in them.
 
+
+### Histogram of tempo distribution in both playlists
+
+```{r density_chart_bpm, echo  = FALSE}
+combined_corpus$artist <-  sapply(combined_corpus$track.album.artists, function(mat) unlist(mat)[3])
+
+test <- combined_corpus %>%
+  ggplot(aes(x <- tempo, group = category, fill = category)) + 
+  geom_density(alpha=.4) +
+  labs(title = "Density chart of tempo for the Michael Jackson and Madonna playlists")
+
+ggplotly(test)
+```
+
+
+***
+
+This density graph shows the distribution of tempo in the playlists of King and Queen. Both playlists have a peak around 120 bpm, this is a normal mean for pop. What also stands out is that the Michael Jackson curve is a bit more flattened, indicating that the tempo in this playlist is a bit less clustered around one spot. Furthermore, there is still some density in the graph around 200 bpm for Michael Jackson, this is caused by a mistake in the process of counting the beats per minute. An example of one of these outliers will be show in the next tab.
 
 ### Novelty functions
 ```{r novelty, echo = FALSE, eval = FALSE}

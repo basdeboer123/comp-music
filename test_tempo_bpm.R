@@ -8,9 +8,11 @@ library(reshape)
 
 combined_corpus$artist <-  sapply(combined_corpus$track.album.artists, function(mat) unlist(mat)[3])
 
-combined_corpus %>%
-  ggplot(aes(x <- tempo)) + geom_density()
+test <- combined_corpus %>%
+  ggplot(aes(x <- tempo, group = category, fill = category)) + 
+  geom_density(alpha=.4)
 
+ggplotly(test)
 
 print(combined_corpus %>% arrange(tempo) %>% slice(1:10) %>% select(artist, track.name, tempo))
 
@@ -62,3 +64,4 @@ melt_playlist %>%
   xlab("Var 1") +
   ylab("Var 2") +
   labs(title = "Correlations between Spotify audio features in complete corpus")
+

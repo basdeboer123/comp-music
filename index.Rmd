@@ -210,7 +210,7 @@ track_level_plotly
 ```
 ***
 
-Description plot
+Description scatter plot
 
 The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Michael Jackson' playlist and the 'This is: Madonna' playlist next to each other. The x- and y-axis show the energy and dancebility respectively. The size of the dots implicit the valence (musical positiveness) of a track. As you can see are the values clustered around the same place for both artist, however, the tracks of Michael Jackson are more spread for dancebility as well as for energy. Furthermore, the artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
 
@@ -303,6 +303,8 @@ cor_matrix_king
 ```
 
 ***
+
+Description
 
 The two matrices on in this tab show the overall correlation between tracks for the playlist of Madonna and Michael Jackson. By looking at these matrices we can deduce the following: 
 
@@ -479,7 +481,7 @@ Cepstrogram_billie_jean %>%
 ```
 
 ***
-Description:
+Description
 
 By looking at the self-similarity matrix while listening to the song the different transitions in the song could be distinguished:
 
@@ -658,6 +660,8 @@ ggplotly(test)
 
 ***
 
+Description
+
 This density graph shows the distribution of tempo in the playlists of King and Queen. Both playlists have a peak around 120 bpm, this is a normal mean for pop. What also stands out is that the Michael Jackson curve is a bit more flattened, indicating that the tempo in this playlist is a bit less clustered around one spot. Furthermore, there is still some density in the graph around 200 bpm for Michael Jackson, this is caused by a mistake in the process of counting the beats per minute. An example of one of these outliers will be show in the next tab.
 
 ### Novelty functions
@@ -675,6 +679,8 @@ abc %>%
 ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/novelty-1.png){width=100%}
 
 *** 
+
+Description
 
 Cyclic tempogram of the track ABC by the Jackson 5 In the previous graph this tracks was labeled as an tempo of 188, however, this tempogram clearly shows that this is not the case. The tempo throughout the track is about 94 BPM which means that the graph in the previous tab indeed showed the double-time beats for this track.
 

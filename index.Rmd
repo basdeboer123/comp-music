@@ -19,8 +19,14 @@ library(plotly)
 library(flexdashboard)
 library(compmus)
 library(reshape)
+library(tidymodels)
+library(ggdendro)
+library(heatmaply)
+
 
 corpus_king <- get_playlist_audio_features("", "37i9dQZF1DXaTIN6XNquoW")
+corpus_king_adapted <- corpus_king[c(-50),]
+
 corpus_queen <- get_playlist_audio_features("", "37i9dQZF1DWTQllLRMgY9S")
 
 best_track_king_billie <- get_track_audio_features(c("2IU9ftOgyRL2caQGWK1jjX", "5ChkMS8OtdzJeqyybCc9R5"))
@@ -29,6 +35,12 @@ best_track_queen_vergin <- get_track_audio_features(c("1C2h7mLntPSeVYciMRTF4a", 
 combined_corpus <-
   bind_rows(
     corpus_king %>% mutate(category = "King of pop (Michael Jackson)"),
+    corpus_queen %>% mutate(category = "Queen of pop (Madonna)")
+  )
+
+combined_corpus_adapted <-
+  bind_rows(
+    corpus_king_adapted %>% mutate(category = "King of pop (Michael Jackson)"),
     corpus_queen %>% mutate(category = "Queen of pop (Madonna)")
   )
 
@@ -60,6 +72,25 @@ mean_queen <- corpus_queen %>%
     mean_valence = mean(valence)
   )
 ```
+
+``` {r include=FALSE}
+get_conf_mat <- function(fit) {
+  outcome <- .get_tune_outcome_names(fit)
+  fit %>% 
+    collect_predictions() %>% 
+    conf_mat(truth = outcome, estimate = .pred_class)
+}  
+
+get_pr <- function(fit) {
+  fit %>% 
+    conf_mat_resampled() %>% 
+    group_by(Prediction) %>% mutate(precision = Freq / sum(Freq)) %>% 
+    group_by(Truth) %>% mutate(recall = Freq / sum(Freq)) %>% 
+    ungroup() %>% filter(Prediction == Truth) %>% 
+    select(class = Prediction, precision, recall)
+}  
+```
+
 
 ```{r key-and-chord, include= FALSE}
 circshift <- function(v, n) {
@@ -720,6 +751,132 @@ The violin plot on the side shows the different timber coefficients for the firs
 
 - The Mozart tracks especially defer from the pop tracks in the timber coefficients: c02, c03 and c07.
 
+### Clasification and clustering
+
+
+```{r importance, echo = FALSE, eval = FALSE}
+
+king_queen_features <-
+  combined_corpus_adapted %>%  # For your portfolio, change this to the name of your corpus.
+  add_audio_analysis() %>% 
+  mutate(
+    playlist = factor(category),
+    segments = map2(segments, key, compmus_c_transpose),
+    pitches =
+      map(
+        segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      ),
+    timbre =
+      map(
+        segments,
+        compmus_summarise, timbre,
+        method = "mean",
+      )
+  ) %>%
+  mutate(pitches = map(pitches, compmus_normalise, "clr")) %>%
+  mutate_at(vars(pitches, timbre), map, bind_rows) %>%
+  unnest(cols = c(pitches, timbre))
+
+
+king_queen_recipe <-
+  recipe(
+    playlist ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration +
+      C + `C#|Db` + D + `D#|Eb` +
+      E + `F` + `F#|Gb` + G +
+      `G#|Ab` + A + `A#|Bb` + B,
+    data = king_queen_features,          # Use the same name as the previous block.
+  ) %>%
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors())      # Converts to z-scores.
+# step_range(all_predictors())    # Sets range to [0, 1].
+
+
+indie_cv <- king_queen_features %>% vfold_cv(5)
+
+
+knn_model <-
+  nearest_neighbor(neighbors = 1) %>%
+  set_mode("classification") %>% 
+  set_engine("kknn")
+indie_knn <- 
+  workflow() %>% 
+  add_recipe(king_queen_recipe) %>% 
+  add_model(knn_model) %>% 
+  fit_resamples(
+    indie_cv, 
+    control = control_resamples(save_pred = TRUE)
+  )
+
+
+
+indie_knn %>% get_conf_mat() %>% autoplot(type = "heatmap")
+
+
+
+forest_model <-
+  rand_forest() %>%
+  set_mode("classification") %>% 
+  set_engine("ranger", importance = "impurity")
+king_queen_forest <- 
+  workflow() %>% 
+  add_recipe(king_queen_recipe) %>% 
+  add_model(forest_model) %>% 
+  fit_resamples(
+    indie_cv, 
+    control = control_resamples(save_pred = TRUE)
+  )
+
+king_queen_forest %>% get_pr()
+
+
+workflow() %>% 
+  add_recipe(king_queen_recipe) %>% 
+  add_model(forest_model) %>% 
+  fit(king_queen_features) %>% 
+  pluck("fit", "fit", "fit") %>%
+  ranger::importance() %>% 
+  enframe() %>% 
+  mutate(name = fct_reorder(name, value)) %>% 
+  ggplot(aes(name, value)) + 
+  geom_col() + 
+  coord_flip() +
+  theme_minimal() +
+  labs(x = NULL, y = "Importance")
+
+
+king_queen_features %>%
+  ggplot(aes(x = acousticness, y = danceability, colour = playlist, size = valance)) +
+  geom_point(alpha = 0.8) +
+  scale_color_viridis_d() +
+  labs(
+    x = "acousticness",
+    y = "danceability",
+    size = "valance",
+    colour = "Playlist"
+  )
+
+
+```
+
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=33%}
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-2.png){width=33%}
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-3.png){width=33%}
+
+***
+
+Description
 
 ### Conclusion & discussion 
 

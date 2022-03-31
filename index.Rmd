@@ -10,6 +10,10 @@ output:
     
 ---
 
+
+Introduction {.storyboard}
+==============================================================================================
+
 ```{r setup, include=FALSE}
 
 library(tidyverse)
@@ -185,12 +189,13 @@ key_templates <-
 
 The corpus that will be used in this research consists out of the two Spotify "This is:" playlists. The first playlist is the "This Is Michael Jackson" playlist (containing 65 tracks), the second playlist is the "This Is Madonna" playlist (containing 59 tracks). These playlists are curated by Spotify’s Shows & Editorial team. This is a team of music experts and genres specialists from around the world, hired by Spotify to curate and manage Spotify’s own playlists. 
 
-So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that they made that they became legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them. The playlist that will be used are on the right side of this page.
+So, the king and the queen of pop. I choose this corpus because I think both these artists where so good in the music that it made them become legends, not only in the pop-genre, but for almost every music-lover all over the world. Regardless of the country or age of a person, everybody knows them. You can view the playlists that will be used on the right side of this page.
 
-The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? Could this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more...
+The groups that will be compared in this corpus are the artists. What are the features that these two artist have in common? Could this be the features that made them become legends? But also; How do songs of the king and queen of pop defer from each other? In the field of danceability, energy, tempo, instrumentalness, speechiness and more... 
 
+The track Billie Jean by Michael Jackson will be analysed as well, there will be a play button beside to listen to the tracks while viewing the visualization. With the result that you can listen to the changes while looking at what is happening with the timbre, chroma's and chords.
 
-One of the possible problems may be in the fact that in the "This is: Michael jackson" playlist there are also songs of the Jackson five. These songs where of course also iconic for Michael Jackson, however, they may be a bit less representative for the overall Michael Jackson playlist. However, there is also a possibility that from these tracks new insights will be derived.
+One of the possible problems may be in the fact that in the "This is: Michael Jackson" playlist there are also songs of the Jackson five. These songs where of course also iconic for Michael Jackson, however, they may be a bit less representative for the overall Michael Jackson playlist. However, there is also a possibility that from these tracks new insights will be derived.
 
 Typical:
 Michael Jackson: "Billie jean", "Smooth criminal" Madonna: "Die another day", "Papa don't preach"
@@ -215,8 +220,10 @@ This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWTQllLRMgY9S?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
+Data visualizations on track's audio features {.storyboard}
+==============================================================================================
 
-### Data visualization on track-level features
+### Scatterplot comparison on track-level features
 
 ```{r plot_track-level_features, echo=FALSE}
 
@@ -243,11 +250,11 @@ track_level_plotly
 
 Description scatter plot
 
-The following plot shows the dancebility, energy, valence and mode on track-level for the 'This is: Michael Jackson' playlist and the 'This is: Madonna' playlist next to each other. The x- and y-axis show the energy and dancebility respectively. The size of the dots implicit the valence (musical positiveness) of a track. As you can see are the values clustered around the same place for both artist, however, the tracks of Michael Jackson are more spread for dancebility as well as for energy. Furthermore, the artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them. These outlier tracks will be analysed as well (To Do).
+The following plot shows the danceability, energy, valence and mode on track-level for the 'This is: Michael Jackson' playlist and the 'This is: Madonna' playlist next to each other. The x- and y-axis show the energy and danceability respectively. The size of the dots show the valence (musical positiveness) of a track. As you can see; the values are clustered around the same place for both artist, however, the tracks of Michael Jackson are more spread for dancebility as well as for energy. Furthermore, the artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them.
 
 
 
-### Boxplot comparizon between Queen and King based on the mean of various features
+### Boxplot comparizon between Queen and King based on the median of various features
 
 ```{r box_plot, echo=FALSE, warning=FALSE}
 
@@ -263,7 +270,7 @@ test <- corpus_combined_select[7] %>% pull(category)%>% pull(category)
 box_plot_king_queen <- ggplot(stack(corpus_combined_select), aes(x = values, y = ind, fill(~test))) +
   geom_boxplot() +
   facet_wrap(~corpus_combined_select[7] %>% pull(category)%>% pull(category)) +
-  labs(title = "Comparison of Mean features between Michael Jackson and Madonna") +
+  labs(title = "Comparison of the five-number summary of a set features between Michael Jackson and Madonna") +
   theme_bw()+
   theme(title =element_text(size=8))
 
@@ -274,22 +281,22 @@ box_plot_king_queen
 ***
 Description boxplot
 
-The previous plot showed the overall distribution on track-level features. In this boxplot the means of various musical features are compared between the King and Queen, from this plot we can make a few observations. 
+The previous plot showed the overall distribution on track-level features. In this boxplot the medians of various musical features are compared between the King and Queen, from this plot we can make a few observations. 
 
 - The tracks in the Michael Jackson playlist have a higher overall valence, however, the valence in the Madonna tracks is more spread.
 
 - The liveness between both artist is about the same, both have a few outlier tracks here, consisting out of live performances.
 
-- The tracks of Michael Jackson have a littel higher overall accousticness.
+- The tracks of Michael Jackson have a little higher overall accousticness.
 
 - Both artist have a very low overall speechiness which means that there is a lot of music in these tracks compared to spoken words.
 
 - The overall energy is high in both playlists, where both have one distinct outlier represented by the dot on the left.
 
-- Dancebility is also high for both artists, the dancebility of the Michael Jackson is a little higher, where the tracks of Madonna are more clustered around the mean.
+- Danceability is also high for both artists, the dancebility of the Michael Jackson is a little higher, where the tracks of Madonna are more clustered around the mean.
 
 
-### correlation matrix to show dependencies in both playlists
+### Correlation matrix to show dependencies in both playlists
 
 ```{r correlation_king,  include=FALSE}
 cor(corpus_king[,6:16]) %>% melt() -> melt_king
@@ -337,19 +344,21 @@ cor_matrix_king
 
 Description
 
-The two matrices on in this tab show the overall correlation between tracks for the playlist of Madonna and Michael Jackson. By looking at these matrices we can deduce the following: 
+The two matrices on in this tab show the overall correlation between tracks for the playlist of Madonna and Michael Jackson, where green indicates a positive correlation and red a negative one. By looking at these matrices we can deduce the following: 
 
-- Valance had got a positive correlation with energy and dancebility, for both artists.
+- Valance has got a positive correlation with energy and dancebility, for both artists.
 
-- Loudness had got a positive correlation with energy, for both artists.
+- Loudness has got a positive correlation with energy, for both artists.
 
-- Accousticness has got a negative correlation with dancebility as well as energy, loudness, speechiness and valence. This is true for both artist, but the effect more extreme in the Michael Jackson playlist.
+- Accousticness has got a negative correlation with dancebility as well as energy, loudness, speechiness and valence. This is true for both artist, but the correlation is stronger in the Michael Jackson playlist.
 
 - The Michael Jackson matrix has got more dark-red colors, indicating that there are more strongly negative correlations.
 
 - The green diagonal line in the middle indicates the correlations with the category itself, which of course is always 1.
 
 
+Analyzing Billie Jean {.storyboard}
+==============================================================================================
 
 ### Billie Jean chromagram 
 
@@ -392,7 +401,7 @@ billie_thriller %>%
 *** 
 Description chromagram
 
-The plot above shows the chromagram for the track Billie Jean by Michael Jackson. This version of Billie Jean is from the Thriller album in 1982. In the next section this version will be compared to the Billie Jean track from the thriller deluxe album in 2008. The euclidean is used to normalize the pitch classes. As you can see, most energy is concentrated in the pitch classes F# and C#.
+The plot above shows the chromagram for the track Billie Jean by Michael Jackson. This version of Billie Jean is from the Thriller album in 1982. In the next tab this version will be compared to the Billie Jean track from the thriller deluxe album in 2008. The euclidean is used to normalize the pitch classes. As you can see, most energy is concentrated in the pitch classes F# and C#. 
 
 ```{=html}
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
@@ -429,11 +438,13 @@ compmus_long_distance(
 ```
 
 ***
-Description dynamic time warping two version
+Description dynamic time warping
 
-The plot besides shows dynamic time warping used to compare the two different version of Billie Jean; the Euclidean distance is used as distance metric. There is a clear diagonal line visible in the graph which shows the similarity between the two versions. This diagonal line is not very good vissible in the first 30 seconds which means that the two different version do defer a bit at that place.
+The plot besides shows dynamic time warping used to compare the two different version of Billie Jean; The original one and the remastered version of the 2008 Thriller Deluxe album. The Euclidean distance is used as distance metric. There is a clear diagonal line visible in the graph which shows the similarity between the two versions. This diagonal line is not very good visible in the first 30 seconds which means that the two different version do defer a bit at that place.
 
-### Cepstrogram of Billie Jean showing changes in timbre components 
+
+### Cepstrogram of Billie Jean showing changes in timbre components
+
 ```{r Cepstrogram, echo=FALSE}
 
 #section, bar, beat, and tatum
@@ -478,7 +489,7 @@ Cepstrogram_billie_jean %>%
 ```
 
 ***
-The cleptogram on the left shows a number of changes in the timbre components;
+The cepstrogram on the left shows a number of changes in the timbre components, where a yellow color indicates a change in the magnitude at that component;
 
 - At t=70 there is a shift to c02 (first chorus)
 - At t=110 this shifts back to c03 (second verse)
@@ -487,7 +498,6 @@ The cleptogram on the left shows a number of changes in the timbre components;
 ```{=html}
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
-
 
 ### Self-Similarity Matrix of Billie Jean showing transitions in the strack
 
@@ -512,9 +522,8 @@ Cepstrogram_billie_jean %>%
 ```
 
 ***
-Description
 
-By looking at the self-similarity matrix while listening to the song the different transitions in the song could be distinguished:
+By looking at the Self-Similarity matrix while listening to the song the different transitions in the song can be distinguished:
 
 - t=0-30 -> musical intro (only instruments).
 
@@ -533,8 +542,6 @@ By looking at the self-similarity matrix while listening to the song the differe
 ```{=html}
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
-
-
 
 ### Chordogram of Billie Jean.
 
@@ -572,7 +579,7 @@ Billie_jean %>%
 
 Description
 
-The chordogram on the left shows the chords that are played throughout the Billie Jean track. The Euclidean is used as method and the chebyshev as normalization, using these two metrics provides a nice visualization on the chords used; this results in a number of observations:
+The chordogram on the left shows the chords that are played throughout the Billie Jean track. The Euclidean is used as method and the chebyshev as normalization, using these two metrics provides a nice visualization of the chords throughout the track. This results in a number of observations:
 
 - F#:minor and Gb:major are the most used chords, visible by the dark blue line at these chords throughout the entire track.
 
@@ -583,7 +590,11 @@ The chordogram on the left shows the chords that are played throughout the Billi
 ```
 
 
-### Track-Level Summaries key-chord-corpus
+Tempo {.storyboard}
+==============================================================================================
+
+
+### Track-Level scatterplot on tempo and standard deviation in tempo
 
 ```{r key-chord-corpus, echo = FALSE}
 michael <-
@@ -652,17 +663,18 @@ combined %>%
     y = "SD Tempo",
     colour = "Artist",
     size = "Duration (min)",
-    alpha = "Volume (dBFS)"
+    alpha = "Volume (dBFS)",
+    title = "Scatterplot on track-level tempo"
   )
 ```
 
 ***
 
-Description
+Description scatterplot
 
 The plot on the left shows the mean tempo (in beats per minute) as well as the variation in tempo throughout the tracks. Furthermore, the length of the tracks is indicated by the size of the dots and the volume of the tracks by the transparency. From this plot we can derive a number of observation which are stated below:
 
-- Almost all tracks, for both artists have an high volume (dBFS), this was very common in pop songs; they tried to master the tracks so that the volume is at its loudest so the music stands out. The phenomenon where the volume in tracks is increased can also be referred to as the Loudness war.
+- Almost all tracks, for both artists have an high volume (dBFS), this was very common in pop songs; they tried to master the tracks so that the volume is at its loudest with the result that the music stands out. The phenomenon where the volume in tracks is increased can also be referred to as the Loudness war.
 
 - Most tracks have a low varieties in tempo throughout the track, there is one outlier here: "Smooth criminal" by Michael Jackson has got a high variety in the bpm throughout the track. You can check it yourself in the audio player below.
 
@@ -670,9 +682,30 @@ The plot on the left shows the mean tempo (in beats per minute) as well as the v
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2bCQHF9gdG5BNDVuEIEnNk?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
-- The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter. In the following tab the tempogram of this track is show.
+- The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter. In the next tab the cyclic tempogram of this track will be shows.
 
 - The Madonna tracks are a little more clustered around the mean which means Madonna's tracks have less variety in tempo and especially less tempo changes in them.
+
+
+### Cyclic tempogram of ABC based on Novelty function
+```{r novelty, echo = FALSE, eval = FALSE}
+abc <- get_tidy_audio_analysis("2VCUcIPY3i6pv9Nu9Vg6k3")
+
+abc %>%
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) %>%
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)", title =  "Cyclic tempogram of ABC") +
+  theme_classic()
+```
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/novelty-1.png){width=100%}
+
+*** 
+
+Description
+
+Cyclic tempogram of the track ABC by the Jackson 5. In the previous graph this tracks was labeled as a track with a tempo of 188, however, this cyclic tempogram clearly shows that this is not the case. The tempo throughout the track is about 94 BPM which means that the graph in the previous tab indeed showed the double-time beats for this track.
 
 
 ### Histogram of tempo distribution in both playlists
@@ -693,30 +726,13 @@ ggplotly(test)
 
 Description
 
-This density graph shows the distribution of tempo in the playlists of King and Queen. Both playlists have a peak around 120 bpm, this is a normal mean for pop. What also stands out is that the Michael Jackson curve is a bit more flattened, indicating that the tempo in this playlist is a bit less clustered around one spot. Furthermore, there is still some density in the graph around 200 bpm for Michael Jackson, this is caused by a mistake in the process of counting the beats per minute. An example of one of these outliers will be show in the next tab.
-
-### Novelty functions
-```{r novelty, echo = FALSE, eval = FALSE}
-abc <- get_tidy_audio_analysis("2VCUcIPY3i6pv9Nu9Vg6k3")
-
-abc %>%
-  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) %>%
-  ggplot(aes(x = time, y = bpm, fill = power)) +
-  geom_raster() +
-  scale_fill_viridis_c(guide = "none") +
-  labs(x = "Time (s)", y = "Tempo (BPM)", title =  "cyclic tempogram of ABC") +
-  theme_classic()
-```
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/novelty-1.png){width=100%}
-
-*** 
-
-Description
-
-Cyclic tempogram of the track ABC by the Jackson 5 In the previous graph this tracks was labeled as an tempo of 188, however, this tempogram clearly shows that this is not the case. The tempo throughout the track is about 94 BPM which means that the graph in the previous tab indeed showed the double-time beats for this track.
+This density graph shows the distribution of tempo in the playlists of the King and Queen to get a better visualization of the distribution of the tempo from the scatterplot two tabs to the left. Both playlists have a peak around 120 bpm, this is a normal mean in bpm for pop. What also stands out is that the Michael Jackson curve is a bit more flattened, indicating that the tempo in this playlist is a bit less clustered around one spot, an observation which we could also see in the scatterplot. Furthermore, there is still some density in the graph around 200 bpm for Michael Jackson, this is caused by a mistake in the process of counting the beats per minute. An example of this outlier is shows in the previous tab.
 
 
-### Average timbre coefficients for the Michael Jackson and Madonna playlists
+Timbre {.storyboard}
+==============================================================================================
+
+### Average timbre coefficients for the Michael Jackson and Madonna playlists compared to a different genre
 
 
 ```{r violin, echo = FALSE}
@@ -735,23 +751,27 @@ combined_violin %>%
   ggplot(aes(x = basis, y = value, fill = Artist)) +
   geom_violin() +
   scale_fill_viridis_d() +
-  labs(title = "Average timbre coefficients for the Michael Jackson and Madonna playlists", x = "Spotify Timbre Coefficients", y = "", fill = "Artist")
+  labs(title = "Average timbre coefficients for the Michael Jackson, Madonna and Mozart playlists", x = "Spotify Timbre Coefficients", y = "", fill = "Artist")
 
 ```
 
 ***
 
-Description
+Description violin plot
 
-The violin plot on the side shows the different timber coefficients for the first thirty tracks in the Michael Jackson (Blue) and Madonna (Purple) playlist, furthermore, the "This is Mozart" playlist (Yellow) is used as a third category in order to compare the two to a different musical category. A number of observation can be derived from this plot, however because the Spotify timber coefficients are rather vague no real conclusion can be drawn from this.
+The violin plot on the side shows the different timber coefficients for the first thirty tracks in the Michael Jackson (Blue) and Madonna (Purple) playlist, furthermore, the "This is Mozart" playlist (Yellow) is used as a third category in order to compare the two to a different musical genre. A number of observation can be derived from this plot, however because the Spotify timber coefficients are rather vague no real conclusion can be drawn from this.
 
-- The first column (c01) shows the overall loudness of the tracks, this is for Madonna as well as Michael Jackson about the same hight, the loudness in the Mozart playlist is a bit lower.
+- The first column (c01) shows the overall loudness of the tracks, this is for Madonna as well as Michael Jackson about the same height, the loudness in the Mozart playlist is a bit lower.
 
-- The biggest difference between Michael Jackson and Madonna is in c04; the Michael jackson tracks have a much bigger spread here.
+- The biggest difference between Michael Jackson and Madonna is in c04; the Michael Jackson tracks have a much bigger spread here. All the other timbre coefficients are more or less the same for Michael Jackson and Madonna.
 
 - The Mozart tracks especially defer from the pop tracks in the timber coefficients: c02, c03 and c07.
 
-### Clasification and clustering
+
+Classification and clustering {.storyboard}
+==============================================================================================
+
+### Classification
 
 
 ```{r importance, echo = FALSE, eval = FALSE}
@@ -823,7 +843,7 @@ indie_knn <-
 
 indie_knn %>% get_conf_mat() %>% autoplot(type = "heatmap")
 
-
+indie_knn %>% get_pr()
 
 forest_model <-
   rand_forest() %>%
@@ -857,26 +877,44 @@ workflow() %>%
 
 
 king_queen_features %>%
-  ggplot(aes(x = acousticness, y = danceability, colour = playlist, size = valance)) +
+  ggplot(aes(x = acousticness, y = danceability, colour = playlist, size = valence)) +
   geom_point(alpha = 0.8) +
   scale_color_viridis_d() +
   labs(
     x = "acousticness",
     y = "danceability",
-    size = "valance",
+    size = "valence",
     colour = "Playlist"
   )
 
 
 ```
 
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=33%}
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-2.png){width=33%}
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-3.png){width=33%}
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=66%}
 
 ***
 
-Description
+A k-nearest neighbour classifier has been used to check how well the tracks of Michael Jackson and Madonna can be classified correctly. The results of this classifier are poor, the precision is around 0.54 and the recall around 0.49, which means that the classes are almost randomly ordered and not a good distinction can be made.
+
+When using the more powerful random Forrest algorithm the precision and recall become a little higher, to around ..., but this is still not a very good score, meaning that it is quite hard to use the Spotify API features to classify if a track is made by the King- or the Queen of pop.
+
+
+
+### Clustering
+
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-2.png){width=48%} ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-3.png){width=48%}
+
+***
+
+The bar plot on the left gives us a ranking of feature importance, which is a measure of how useful each feature in the recipe was for distinguishing the ground-truth classes. This ranking has been made based on Random forests; a powerful variant of the decision-tree algorithm. As you can see is the chords G# the most important feature to distinguish between the King and Queen of pop, followed by accousticness and danceability. 
+
+The Scatter plot on the right shows a distribution of tracks based on the features danceability and accousticness. There can not be a very clear border between the two categories, and most of the tracks are still clustered around the same place for both artists. This means that, even when the most important features are used, not a clear classification between the two artists can be made. This makes sense because both artists belong to the same genre and have many values of features in common, as can been seen in almost all previous plots.
+
+
+
+
+Conclusion {.storyboard}
+==============================================================================================
 
 ### Conclusion & discussion 
 

@@ -272,8 +272,8 @@ box_plot_king_queen <- ggplot(stack(corpus_combined_select), aes(x = values, y =
   geom_boxplot() +
   facet_wrap(~corpus_combined_select[7] %>% pull(category)%>% pull(category)) +
   labs(title = "Comparison of the five-number summary of a set features between Michael Jackson and Madonna") +
-  theme_bw()+
-  theme(title =element_text(size=8))
+  theme_bw() +
+  theme(title = element_text(size=6))
 
 box_plot_king_queen
 
@@ -446,11 +446,9 @@ Description dynamic time warping
 The plot besides shows dynamic time warping used to compare the two different version of Billie Jean; The original one and the remastered version of the 2008 Thriller Deluxe album. The Euclidean distance is used as distance metric. There is a clear diagonal line visible in the graph which shows the similarity between the two versions. This diagonal line is not very good visible in the first 30 seconds which means that the two different version do defer a bit at that place. You can listen to both tracks and check if you can hear the difference yourself.
 
 ```{=html}
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5ChkMS8OtdzJeqyybCc9R5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-```
-
-```{=html}
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5ChkMS8OtdzJeqyybCc9R5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
 
@@ -915,13 +913,14 @@ king_queen_features %>%
 
 ```
 
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=45%} ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=45%}
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=45%} ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-2.png){width=45%}
+
 
 ***
 
-A k-nearest neighbour classifier has been used to check how well the tracks of Michael Jackson and Madonna can be classified correctly. The results of this classifier are poor, the precision is around 0.54 and the recall around 0.49, which means that the classes are almost randomly ordered and not a good distinction can be made.
+A k-nearest neighbour classifier has been used to check how well the tracks of Michael Jackson and Madonna can be classified correctly, you can see the results of this classifier on the left. The results of this classifier are poor, the precision is around 0.54 and the recall around 0.49, which means that the classes are almost randomly ordered and not a good distinction can be made.
 
-When using the more powerful random Forrest algorithm the precision and recall become a little higher, around 0.69 and 0.70 respectively, but this is still not a very good score, meaning that it is quite hard to use the Spotify API features to classify if a track is made by the King- or the Queen of pop.
+When using the more powerful random Forrest algorithm (plot on the right) the precision and recall become a little higher, around 0.69 and 0.70 respectively, but this is still not a very good score, meaning that it is quite hard to use the Spotify API features to classify if a track is made by the King- or the Queen of pop.
 
 
 

@@ -195,17 +195,16 @@ The groups that will be compared in this corpus are the artists. What are the fe
 
 The track Billie Jean by Michael Jackson will be analysed as well, there will be a play button beside to listen to the tracks while viewing the visualization. With the result that you can listen to the changes while looking at what is happening with the timbre, chroma's and chords.
 
-One of the possible problems may be in the fact that in the "This is: Michael Jackson" playlist there are also songs of the Jackson five. These songs where of course also iconic for Michael Jackson, however, they may be a bit less representative for the overall Michael Jackson playlist. However, there is also a possibility that from these tracks new insights will be derived.
+One of the problems that could be encountered is that both artists make music in the same genre. This has the result that many features have approximately the same value, so that it becomes hard to distinguish between the two artists. Nevertheless, the small differences between them are also important and the artists can be compared to an other genre, which will be done with the violin plot of the timbre.
+
 
 Typical:
-Michael Jackson: "Billie jean", "Smooth criminal" Madonna: "Die another day", "Papa don't preach"
+Michael Jackson: "Billie jean", "Smooth criminal" 
+Madonna: "Die another day", "Papa don't preach"
 
 Atypical:
-Michael Jackson: "she's Out of my life" (very slow track) Madonna: "Don't cry for me Argentina"
-
-This Is Michael Jackson playlist: https://open.spotify.com/playlist/37i9dQZF1DXaTIN6XNquoW
-
-This Is Madonna playlist: https://open.spotify.com/playlist/37i9dQZF1DWTQllLRMgY9S
+Michael Jackson: "she's Out of my life" (very slow track) 
+Madonna: "Don't cry for me Argentina"
 
 ![michael_jackson](/home/bas/compmusic/compmusic/index_files/figure-html/micheal_jackson.jpeg){width=49%} ![madonna](/home/bas/compmusic/compmusic/index_files/figure-html/madonna.jpeg){width=49%}
 
@@ -239,7 +238,7 @@ track_level <- combined_corpus %>%
   scale_color_manual(name = "mode", values = c("lightblue", "steelblue4")) +
   #scale_fill_discrete(name = "New Legend Title") +
   theme_bw()+
-  theme(title =element_text(size=15))
+  theme(title =element_text(size=10)) 
   
 # make interactive
 track_level_plotly <- ggplotly(track_level)
@@ -251,6 +250,8 @@ track_level_plotly
 Description scatter plot
 
 The following plot shows the danceability, energy, valence and mode on track-level for the 'This is: Michael Jackson' playlist and the 'This is: Madonna' playlist next to each other. The x- and y-axis show the energy and danceability respectively. The size of the dots show the valence (musical positiveness) of a track. As you can see; the values are clustered around the same place for both artist, however, the tracks of Michael Jackson are more spread for dancebility as well as for energy. Furthermore, the artists have an equally divided ratio of major- and minor mode tracks. What stands out is that both artists have a few 'outlier' tracks, you can view which tracks these are by hovering over them.
+
+In the next tab the spread of these and some additional features will be shown for both artists. 
 
 
 
@@ -295,6 +296,8 @@ The previous plot showed the overall distribution on track-level features. In th
 
 - Danceability is also high for both artists, the dancebility of the Michael Jackson is a little higher, where the tracks of Madonna are more clustered around the mean.
 
+How these features coherent is shown in the next tab
+
 
 ### Correlation matrix to show dependencies in both playlists
 
@@ -336,13 +339,13 @@ cor_matrix_queen <- melt_queen %>%
 
 ```{r, figures-side, fig.show="hold", out.width="50%"}
 
-cor_matrix_queen
 cor_matrix_king
+cor_matrix_queen
 ```
 
 ***
 
-Description
+Description correlation matrix
 
 The two matrices on in this tab show the overall correlation between tracks for the playlist of Madonna and Michael Jackson, where green indicates a positive correlation and red a negative one. By looking at these matrices we can deduce the following: 
 
@@ -440,7 +443,17 @@ compmus_long_distance(
 ***
 Description dynamic time warping
 
-The plot besides shows dynamic time warping used to compare the two different version of Billie Jean; The original one and the remastered version of the 2008 Thriller Deluxe album. The Euclidean distance is used as distance metric. There is a clear diagonal line visible in the graph which shows the similarity between the two versions. This diagonal line is not very good visible in the first 30 seconds which means that the two different version do defer a bit at that place.
+The plot besides shows dynamic time warping used to compare the two different version of Billie Jean; The original one and the remastered version of the 2008 Thriller Deluxe album. The Euclidean distance is used as distance metric. There is a clear diagonal line visible in the graph which shows the similarity between the two versions. This diagonal line is not very good visible in the first 30 seconds which means that the two different version do defer a bit at that place. You can listen to both tracks and check if you can hear the difference yourself.
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5ChkMS8OtdzJeqyybCc9R5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7J1uxwnxfQLu4APicE5Rnj?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
+
+
 
 
 ### Cepstrogram of Billie Jean showing changes in timbre components
@@ -517,7 +530,8 @@ Cepstrogram_billie_jean %>%
   coord_fixed() +
   scale_fill_viridis_c(guide = "none") +
   theme_classic() +
-  labs(title = "Self-Similarity Matrix of Billie Jean by Michael Jackson", x = "", y = "")
+  labs(title = "Self-Similarity Matrix of Billie Jean by Michael Jackson", x = "", y = "") +
+  theme(title =element_text(size=10))
 
 ```
 
@@ -577,7 +591,7 @@ Billie_jean %>%
 
 ***
 
-Description
+Description Chordogram
 
 The chordogram on the left shows the chords that are played throughout the Billie Jean track. The Euclidean is used as method and the chebyshev as normalization, using these two metrics provides a nice visualization of the chords throughout the track. This results in a number of observations:
 
@@ -682,9 +696,9 @@ The plot on the left shows the mean tempo (in beats per minute) as well as the v
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2bCQHF9gdG5BNDVuEIEnNk?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 ```
 
-- The mean tempo for both artists is clustered around 115 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter. In the next tab the cyclic tempogram of this track will be shows.
+- The mean tempo for both artists is clustered around 120 beats per minute which is typical for pop music (100 - 130 bpm on average). Here is also one outlier with a bpm of 188: This is the song "ABC" by the Jackson Five, this track is actually 94 bpm but it can also be used double-time at 188 BPM, the audio analyser captures the latter. In the next tab the cyclic tempogram of this track will be shows.
 
-- The Madonna tracks are a little more clustered around the mean which means Madonna's tracks have less variety in tempo and especially less tempo changes in them.
+- The Madonna tracks are a little more clustered around the mean which means Madonna's tracks have less variety in tempo and especially less tempo changes in the tracks.
 
 
 ### Cyclic tempogram of ABC based on Novelty function
@@ -705,10 +719,14 @@ abc %>%
 
 Description
 
-Cyclic tempogram of the track ABC by the Jackson 5. In the previous graph this tracks was labeled as a track with a tempo of 188, however, this cyclic tempogram clearly shows that this is not the case. The tempo throughout the track is about 94 BPM which means that the graph in the previous tab indeed showed the double-time beats for this track.
+Cyclic tempogram of the track ABC by the Jackson 5. In the previous graph this tracks was labeled as a track with a tempo of 188, however, this cyclic tempogram clearly shows that this is not the case. The tempo throughout the track is about 94 BPM which means that the graph in the previous tab indeed showed the double-time beats for this track. You can listen to the track yourself and tab along with [this site](https://www.beatsperminuteonline.com).
+
+```{=html}
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2VCUcIPY3i6pv9Nu9Vg6k3?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+```
 
 
-### Histogram of tempo distribution in both playlists
+### Density chart of tempo distribution in both playlists
 
 ```{r density_chart_bpm, echo  = FALSE}
 combined_corpus$artist <-  sapply(combined_corpus$track.album.artists, function(mat) unlist(mat)[3])
@@ -716,7 +734,8 @@ combined_corpus$artist <-  sapply(combined_corpus$track.album.artists, function(
 test <- combined_corpus %>%
   ggplot(aes(x <- tempo, group = category, fill = category)) + 
   geom_density(alpha=.4) +
-  labs(title = "Density chart of tempo for the Michael Jackson and Madonna playlists")
+  labs(title = "Density chart of tempo for the Michael Jackson and Madonna playlists") +
+  theme(title = element_text(size=8))
 
 ggplotly(test)
 ```
@@ -724,9 +743,13 @@ ggplotly(test)
 
 ***
 
-Description
+Description Density chart
 
-This density graph shows the distribution of tempo in the playlists of the King and Queen to get a better visualization of the distribution of the tempo from the scatterplot two tabs to the left. Both playlists have a peak around 120 bpm, this is a normal mean in bpm for pop. What also stands out is that the Michael Jackson curve is a bit more flattened, indicating that the tempo in this playlist is a bit less clustered around one spot, an observation which we could also see in the scatterplot. Furthermore, there is still some density in the graph around 200 bpm for Michael Jackson, this is caused by a mistake in the process of counting the beats per minute. An example of this outlier is shows in the previous tab.
+This density graph shows the distribution of tempo in the playlists of the King and Queen to get a better visualization of the distribution of the tempo from the scatterplot two tabs to the left. Both playlists have a peak around 120 bpm, this is a normal mean in bpm for pop.
+
+What also stands out is that the Michael Jackson curve is a bit more flattened, indicating that the tempo in this playlist is a bit less clustered around one spot, an observation which we could also see in the scatterplot.
+
+Furthermore, there is still some density in the graph around 200 bpm for Michael Jackson, this is caused by a mistake in the process of counting the beats per minute. An example of this outlier is shows in the previous tab.
 
 
 Timbre {.storyboard}
@@ -751,7 +774,8 @@ combined_violin %>%
   ggplot(aes(x = basis, y = value, fill = Artist)) +
   geom_violin() +
   scale_fill_viridis_d() +
-  labs(title = "Average timbre coefficients for the Michael Jackson, Madonna and Mozart playlists", x = "Spotify Timbre Coefficients", y = "", fill = "Artist")
+  labs(title = "Average timbre coefficients for the Michael Jackson, Madonna and Mozart playlists", x = "Spotify Timbre Coefficients", y = "", fill = "Artist") +
+  theme(title = element_text(size=8))
 
 ```
 
@@ -858,6 +882,7 @@ king_queen_forest <-
     control = control_resamples(save_pred = TRUE)
   )
 
+king_queen_forest %>% get_conf_mat() %>% autoplot(type = "heatmap")
 king_queen_forest %>% get_pr()
 
 
@@ -890,19 +915,19 @@ king_queen_features %>%
 
 ```
 
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=66%}
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=45%} ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-1.png){width=45%}
 
 ***
 
 A k-nearest neighbour classifier has been used to check how well the tracks of Michael Jackson and Madonna can be classified correctly. The results of this classifier are poor, the precision is around 0.54 and the recall around 0.49, which means that the classes are almost randomly ordered and not a good distinction can be made.
 
-When using the more powerful random Forrest algorithm the precision and recall become a little higher, to around ..., but this is still not a very good score, meaning that it is quite hard to use the Spotify API features to classify if a track is made by the King- or the Queen of pop.
+When using the more powerful random Forrest algorithm the precision and recall become a little higher, around 0.69 and 0.70 respectively, but this is still not a very good score, meaning that it is quite hard to use the Spotify API features to classify if a track is made by the King- or the Queen of pop.
 
 
 
 ### Clustering
 
-![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-2.png){width=48%} ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-3.png){width=48%}
+![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-3.png){width=48%} ![bpm](/home/bas/compmusic/compmusic/index_files/figure-html/importance-4.png){width=48%}
 
 ***
 
@@ -918,7 +943,7 @@ Conclusion {.storyboard}
 
 ### Conclusion & discussion 
 
-What stands out in the the analysed Spotify features for both Michael Jackson as well as Madonna is that the tracks of both artists have a high average dancebility and energy. Furthermore, the average tempo for both artists is around 120 beats per minute, this is around the average for pop songs (100-140 bpm). This high energy and dancebility are of course important in the success of both artists, especially in pop genre dancing and energy is very important. However, what I can conclude form this analyses is that the features of the tracks itself where not the most important factor in the success of both artists. It was the the pioneering innovation of subjects and song-texts, because pop more than just music. It’s about the image, the publicity, the collaborations, the hit singles, the cultural and sociopolitical messages behind the songs, and the theatrical extravaganzas the artists produce on stage. 
+What stands out in the the analysed Spotify features for both Michael Jackson as well as Madonna is that the tracks of both artists have a high average dancebility and energy. Furthermore, the average tempo for both artists is around 120 beats per minute, this is around the average for pop songs (100-130 bpm). This high energy and dancebility are of course important in the success of both artists, especially in pop genre dancing and energy is very important. However, what I can conclude form this analyses is that the features of the tracks itself where not the most important factor in the success of both artists. It was the the pioneering innovation of subjects and song-texts, because pop is more than just music. It’s about the image, the publicity, the collaborations, the hit singles, the cultural and sociopolitical messages behind the songs, and the theatrical extravaganzas the artists produce on stage. 
 
 For Michael Jackson it was his groundbreaking creativity. For instance, his theatrical extravaganzas with his incredible dance moves and on top of that he brought messages to the world with his songs that no artist has addressed before. He challenged the country’s ideas of how an African-American man should behave and be seen, topics like differences in race, sexuality and racism and where adressed in his songs. This incredible creativity along with the high energy and dancebility in his songs made him not only the perfect pop-star but the pop-legend.
 
